@@ -22,10 +22,10 @@ Yes this really works. Scan it! ( the first code you scan will forward you to an
 
 To help you get a quick rough mental idea of the technology - imagine if you cut a file into lots of tiny pieces, turn each tiny piece into a QR code, and then scanned all those QR codes. In very simple terms this is what Lumaphore is about.
 
-You could arrange such a process by "streaming" or cycling through those QR codes very quickly on a monitor. 
+You could arrange such a process by looping or cycling through those QR codes very quickly on a monitor until the receiver has received enough data (we call this "stream VLR")
 
-You could also use printed paper as a VLR.
-Lumaphore enables you to lock down physical paper documents with passwords and encryption. Imagine paper covered in QR codes, each a tiny piece of a file that was compressed and encrypted beforehand (This feature is available in Lightdrive already, after selecting a file to send, go to options > save to Paperdrive).
+You could also use printed paper (we call this "paper VLR").
+Lumaphore enables you to lock down physical paper documents with passwords and encryption. Imagine paper covered in QR codes, each a tiny piece of a file that was compressed and encrypted beforehand (This feature is available in [Lightdrive](https://lightdrive.app) already, after selecting a file to send, go to options > save to Paperdrive).
 
 ![the first paperdrive document created](https://miro.medium.com/max/1400/1*TfW4zXw7UiZaxgrP439rKQ.jpeg)
 
@@ -34,11 +34,27 @@ Lumaphore enables you to lock down physical paper documents with passwords and e
 ### Very cool characteristics
 ---
 ## closing the biggest encryption gap in the world
-Mail fraud costs the global economy hundreds of billions of dollars 
+
+We encrypt everything in the modern world. We use secure protocols for everything, from loading a website (HTTPS) to bank transfers (SWIFT).
+
+Physical mail seems to be the last big unencrypted system in the world. 
+
+Fraud costs the global economy trillions of dollars a year. Mail fraud is brtual, and opens people up to identity theft and losing their life savings. It's estimated that [1.7 million packages are stolen per day in the US]() *alone*.
+
+The benefits of encrypted paper with Lumaphore are two-fold. 
+
+1) Nobody can read your Lumaphore-encrypted post, and if they can't read it, mail fraud resulting from stolen bank statements, medical documents and checks is a thing of the past. 
+
+2) For example, If you and your bank agree that your "POST-PIN" is 4923, and you scan your post from your bank and your POST-PIN doesn't decrypt the document, you know that letter wasn't really from your bank.
+(This can apply to proving the sender's identity in many cases, from letters from friends to letters from people pretending to be reputable charities)
+
+3) you could use Lumaphore to encrypt a backup of your own documents, like an offline password or crypto-keys manager.
 
 ---
 
 ## protocol hijacking
+People can start using Lumaphore without knowing it exists.
+
 Many smartphones' default camera apps are capable of detecting QR codes these days. 
 
 Many people recognise and know how to scan QR codes. 
@@ -47,11 +63,13 @@ Lumaphore uses QR codes to encode each packet of data.
 
 Mix that all together and we have an easier-than-usual onboarding process for Lumaphore.
 
-The user sees a QR code, the phone reads the QR code, the URL prepended to the data in the QR code triggers a redirect to your app which implements Lumaphor. Easy! People can start using Lumaphor without knowing it exists.
+The user sees a QR code, the phone reads the QR code, the URL prepended to the data in the QR code triggers a redirect to your app which implements Lumaphor. Easy! 
 
 ---
 
 ## magic
+
+Lumaphore makes use of erasure codes, which means that only 65% - 70% of the total number of data packets needs to be scanned for the original file to be received.
 
 ---
 ## Lumaphore data operations
@@ -87,56 +105,66 @@ Packet subsections are separated by semicolon.
 The `PAYLOAD` will contain either metadata or data.
 
 ```
-PREFIX;FRAME_TYPE;FRAME_NUMBER;PAYLOAD
+┌──────────┬─────────────┬──────────────┬─────────┐
+│          │             │              │         │
+│ PROTOCOL │ PACKET_TYPE │ PACKET_INDEX │ PAYLOAD │
+│          │             │              │         │
+└──────────┴─────────────┴──────────────┴─────────┘
 
-- protocol / onboarding prefix  STRING
-- frame type (0,1)              NUMBER
-    - 0 = metadata frame
-    - 1 = data frame
-- frame number                  NUMBER
-- payload                       ...
+protocol / onboarding prefix   STRING
+packet type (0,1)              NUMBER
+    0 = metadata packet
+    1 = data packet
+packet index                   NUMBER
+payload                        DATA/METADATA
 
 
 ```
 
-## metadata frame payload structure
+## metadata packet payload structure
 ```
-- filename          STRING
-- filetype          STRING
-- encrypted         BOOL
-- size              NUMBER
-- total frames      NUMBER
-- public metadata   BOOL
-- sender            STRING
-- recipient         STRING
-- auth group        STRING
-- fps               NUMBER
+filename          STRING
+file type         STRING
+encrypted         BOOL
+size (bytes)      NUMBER
+total packets     NUMBER
+VLR type          ENUM [stream,gif,paper,video]
+public metadata   BOOL
+sender            STRING
+recipient         STRING
+auth group        STRING
+fps               NUMBER
+protocol version  NUMBER
 ```
-metadata frame example:
+metadata packet example:
 ```
-https://lightdrive.app/#/scan?a=;1;7;11;5;130,66,247,70,101,233
+https://lightdrive.app/#/scan?a=;0;0;Welcome To Lumaphore Presentation Doc 1.txt;text/plain;0;1125;7;0;1;chris macbook;;;10;0.4
 
-PREFIX;FRAME_TYPE;FRAME_NUMBER;FILENAME;FILETYPE;ENCRYPTED;SIZE;TOTAL_FRAMES;PUBLIC_METADATA;SENDER;RECIPIENT;AUTH_GROUP;FPS
+PREFIX;PACKET_TYPE;PACKET_INDEX;FILENAME;FILETYPE;ENCRYPTED;SIZE;TOTAL_PACKETS;PUBLIC_METADATA;SENDER;RECIPIENT;AUTH_GROUP;FPS;PROTOCOL_VERSION
 ```
-(the prefix here is a working example from Lightdrive "https://lightdrive.app/#/scan?a=")
+In this example the `recipient` and `auth group` fields are unused, and left empty. 
+
+The prefix here is a working example from Lightdrive "https://lightdrive.app/#/scan?a=".
 
 -----
 
-## data frame payload structure
+## data packet payload structure
 ```
-- degree NUMBER
-- K NUMBER
-- data INT[]
+degree  NUMBER
+K       NUMBER
+data    INT[]
 ```
 
-data frame example:
+data packet example:
 
 ```
 https://lightdrive.app/#/scan?a=;1;7;11;5;130,66,247,70,101,233
 
-PREFIX;FRAME_TYPE;FRAME_NUMBER;DEGREE;K;DATA
+PREFIX;PACKET_TYPE;PACKET_INDEX;DEGREE;K;DATA
 ```
-(the prefix here is a working example from Lightdrive "https://lightdrive.app/#/scan?a=")
+`degree` and `K` are concepts from [erasure codes](https://en.wikipedia.org/wiki/Erasure_code), which are used in Lumaphore to compensate for missing data packets.
+
+The prefix here is a working example from Lightdrive "https://lightdrive.app/#/scan?a=".
 
 --- 
 
