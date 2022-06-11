@@ -13,7 +13,7 @@ If you're looking for a free ready-to-use Lumaphore app, go check out [Lightdriv
 
 
 ### what is Lumaphore?
-Lumaphore is a protocol that deals with Visible Light Representations of data (VLRs). With it, you can send files from a screen, or off of a piece of paper, and into a camera (like a webcam or smartphone)
+Lumaphore is a protocol that deals with Visible Light Transmission Media. With it, you can send files from a screen, or off of a piece of paper, and into a camera (like a webcam or smartphone)
 
 Yes this really works. Scan it! ( the first code you scan will forward you to an app that implements the Lumaphore protocol. )
 
@@ -22,9 +22,9 @@ Yes this really works. Scan it! ( the first code you scan will forward you to an
 
 To help you get a quick rough mental idea of the technology - imagine if you cut a file into lots of tiny pieces, turn each tiny piece into a QR code, and then scanned all those QR codes. In very simple terms this is what Lumaphore is about.
 
-You could arrange such a process by looping or cycling through those QR codes very quickly on a monitor until the receiver has received enough data (we call this "stream VLR")
+You could arrange such a process by looping or cycling through those QR codes very quickly on a monitor until the receiver has received enough data (we call this Temporal Transmission Medium "TTM")
 
-You could also use printed paper (we call this "paper VLR").
+You could also use printed paper (we call this Spacial Transmission Medium "STM").
 Lumaphore enables you to lock down physical paper documents with passwords and encryption. Imagine paper covered in QR codes, each a tiny piece of a file that was compressed and encrypted beforehand (This feature is available in [Lightdrive](https://lightdrive.app) already, after selecting a file to send, go to options > save to Paperdrive).
 
 ![the first paperdrive document created](https://miro.medium.com/max/1400/1*TfW4zXw7UiZaxgrP439rKQ.jpeg)
@@ -39,9 +39,9 @@ We encrypt everything in the modern world. We use secure protocols for everythin
 
 Physical mail seems to be the last big unencrypted system in the world. 
 
-Fraud costs the global economy trillions of dollars a year. Mail fraud is brtual, and opens people up to identity theft and losing their life savings. It's estimated that [1.7 million packages are stolen per day in the US]() *alone*.
+Fraud costs the global economy trillions of dollars a year. Mail fraud is brutal, and opens people up to identity theft and losing their life savings. It's estimated that [1.7 million packages are stolen per day in the US]() *alone*.
 
-The benefits of encrypted paper with Lumaphore are two-fold. 
+The benefits of encrypted paper with Lumaphore are many. 
 
 1) Nobody can read your Lumaphore-encrypted post, and if they can't read it, mail fraud resulting from stolen bank statements, medical documents and checks is a thing of the past. 
 
@@ -84,7 +84,7 @@ The sending and scanning of files with Lumaphore involves a sequence of data-pro
 4. packet formatting
 
 
-> (Visible Light Representation is created and scanned)
+> (Transmission Medium is created and scanned)
 
 ### post-scan data operations
 
@@ -123,18 +123,18 @@ payload                        DATA/METADATA
 
 ## metadata packet payload structure
 ```
-filename          STRING
-file type         STRING
-encrypted         BOOL
-size (bytes)      NUMBER
-total packets     NUMBER
-VLR type          ENUM [stream,gif,paper,video]
-public metadata   BOOL
-sender            STRING
-recipient         STRING
-auth group        STRING
-fps               NUMBER
-protocol version  NUMBER
+    filename                    STRING
+    file type                   STRING
+    encrypted                   BOOL
+    size (bytes)                NUMBER
+    total packets               NUMBER
+    transmission medium type    ENUM [temporal, spacial]
+    public metadata             BOOL
+    sender                      STRING
+    recipient                   STRING
+    auth group                  STRING
+    fps                         NUMBER
+    protocol version            NUMBER
 ```
 metadata packet example:
 ```
@@ -170,8 +170,8 @@ The prefix here is a working example from Lightdrive "https://lightdrive.app/#/s
 
 ## Glossary
 
-- Visible Light Representation (VLR) 
-    - whichever visible medium you use for representing 
+- Transmission Medium (TM) 
+    - Could be temporal (TTM) like a GIF or a video, or spacial (STM) like packets printed on a piece of paper or some packaging.
 - Onboarding Prefix
     - these are strings appended to the beginning of datapackets for the purpose of onboarding users that aren't familiar with Lumaphore applications by forwarding them to applications that implement Lumaphore.
 - Fountain Codes
@@ -181,7 +181,7 @@ The prefix here is a working example from Lightdrive "https://lightdrive.app/#/s
 ## FAQ
 > Isn't this just QR codes?
 
-We use [QR codes](https://en.wikipedia.org/wiki/QR_code) for the visual encoding of data packets. We may eventually support other visual encoding standards such as [JABcode](https://github.com/jabcode/jabcode), for higher bandwidth. For now QR codes have amazing benefits, such as wide support in camera apps by smartphone manufacturers. This means that while people might not yet have applications on their devices that implement Lumaphore, we can use QR codes to fairly seemlessly redirect users to apps that *do* implement Lumaphore (for example [Lightdrive](https://lightdrive.app)). I guess you could say that Lumaphore isn't "just QR codes", in the same way that WiFi and Bluetooth are not just noise on radio frequencies.
+We use [QR codes](https://en.wikipedia.org/wiki/QR_code) for the visual encoding of data packets. We may eventually support other visual encoding standards such as [JABcodes](https://github.com/jabcode/jabcode), for higher bandwidth. For now QR codes have amazing benefits, such as wide support in camera apps by smartphone manufacturers. This means that while people might not yet have applications on their devices that implement Lumaphore, we can use QR codes to fairly seemlessly redirect users to apps that *do* implement Lumaphore (for example [Lightdrive](https://lightdrive.app)). I guess you could say that Lumaphore isn't "just QR codes", in the same way that WiFi and Bluetooth are not just noise on radio frequencies.
 
 
 ---
