@@ -5,6 +5,7 @@ If you're looking for a free ready-to-use Lumaphore app, go check out [Lightdriv
 # Table of Contents
 1. [Summary](#example)
 2. [Very Cool Characteristics](#Very-cool-characteristics)
+2. [Future Work](#Future-Work)
 2. [Lumaphore data operations](#Lumaphore-data-operations)
 3. [Lumaphore packet structure](#Lumaphore-packet-structure)
 4. [FAQ](#FAQ)
@@ -70,6 +71,11 @@ The user sees a QR code, the phone reads the QR code, the URL prepended to the d
 ## magic
 
 Lumaphore makes use of erasure codes, which means that only 65% - 70% of the total number of data packets needs to be scanned for the original file to be received.
+
+---
+# Future work
+## encrypted AR displays 
+Lumaphore and Augmented Reality could work really nicely together. Instead of drawing data plainly on monitors, Lumaphor-encoded and encrypted data (TTM or STM) could be drawn on-screen and only authenticated devices would be able to render the contained data on a virtual display.
 
 ---
 ## Lumaphore data operations
