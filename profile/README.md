@@ -123,18 +123,18 @@ payload                        DATA/METADATA
 
 ## metadata packet payload structure
 ```
-    filename                    STRING
-    file type                   STRING
-    encrypted                   BOOL
-    size (bytes)                NUMBER
-    total packets               NUMBER
-    transmission medium type    ENUM [temporal, spacial]
-    public metadata             BOOL
-    sender                      STRING
-    recipient                   STRING
-    auth group                  STRING
-    fps                         NUMBER
-    protocol version            NUMBER
+filename                    STRING
+file type                   STRING
+encrypted                   BOOL
+size (bytes)                NUMBER
+total packets               NUMBER
+transmission medium type    ENUM [temporal, spacial]
+public metadata             BOOL
+sender                      STRING
+recipient                   STRING
+auth group                  STRING
+fps                         NUMBER
+protocol version            NUMBER
 ```
 metadata packet example:
 ```
