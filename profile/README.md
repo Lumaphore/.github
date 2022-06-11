@@ -1,8 +1,8 @@
-# Welcome to Lumaphore
+# Lumaphore
 
 If you're looking for a free ready-to-use Lumaphore app, go check out [Lightdrive](https://lightdrive.app)
 
-# Table of Contents
+## Table of Contents
 1. [Summary](#example)
 2. [Very Cool Characteristics](#Very-cool-characteristics)
 2. [Future Work](#Future-Work)
@@ -64,7 +64,7 @@ Lumaphore uses QR codes to encode each packet of data.
 
 Mix that all together and we have an easier-than-usual onboarding process for Lumaphore.
 
-The user sees a QR code, the phone reads the QR code, the URL prepended to the data in the QR code triggers a redirect to your app which implements Lumaphor. Easy! 
+The user sees a QR code, the phone reads the QR code, the URL prepended to the data in the QR code triggers a redirect to your app which implements Lumaphore. Easy! 
 
 ---
 
@@ -75,7 +75,7 @@ Lumaphore makes use of erasure codes, which means that only 65% - 70% of the tot
 ---
 # Future work
 ## encrypted AR displays 
-Lumaphore and Augmented Reality could work really nicely together. Instead of drawing data plainly on monitors, Lumaphor-encoded and encrypted data (TTM or STM) could be drawn on-screen and only authenticated devices would be able to render the contained data on a virtual display.
+Lumaphore and Augmented Reality could work really nicely together. Instead of drawing data plainly on monitors, Lumaphore-encoded and encrypted data (TTM or STM) could be drawn on-screen and only authenticated devices would be able to render the contained data on a virtual display.
 
 ---
 ## Lumaphore data operations
@@ -144,9 +144,9 @@ protocol version            NUMBER
 ```
 metadata packet example:
 ```
-https://lightdrive.app/#/scan?a=;0;0;Welcome To Lumaphore Presentation Doc 1.txt;text/plain;0;1125;7;0;1;chris macbook;;;10;0.4
+https://lightdrive.app/#/scan?a=;0;0;Welcome To Lumaphore Presentation Doc 1.txt;text/plain;0;1125;7;0;0;1;chris macbook;;;10;0.4
 
-PREFIX;PACKET_TYPE;PACKET_INDEX;FILENAME;FILETYPE;ENCRYPTED;SIZE;TOTAL_PACKETS;PUBLIC_METADATA;SENDER;RECIPIENT;AUTH_GROUP;FPS;PROTOCOL_VERSION
+PREFIX;PACKET_TYPE;PACKET_INDEX;FILENAME;FILETYPE;ENCRYPTED;SIZE;TOTAL_PACKETS;TRANSMISSION_MEDIUM_TYPE;PUBLIC_METADATA;SENDER;RECIPIENT;AUTH_GROUP;FPS;PROTOCOL_VERSION
 ```
 In this example the `recipient` and `auth group` fields are unused, and left empty. 
 
