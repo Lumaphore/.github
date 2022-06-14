@@ -111,13 +111,14 @@ Packet subsections are separated by semicolon.
 The `PAYLOAD` will contain either metadata or data.
 
 ```
-┌──────────┬─────────────┬──────────────┬─────────┐
-│          │             │              │         │
-│ PROTOCOL │ PACKET_TYPE │ PACKET_INDEX │ PAYLOAD │
-│          │             │              │         │
-└──────────┴─────────────┴──────────────┴─────────┘
+┌──────────┬────┬─────────────┬──────────────┬─────────┐
+│          │    │             │              │         │
+│ PROTOCOL │ ID │ PACKET_TYPE │ PACKET_INDEX │ PAYLOAD │
+│          │    │             │              │         │
+└──────────┴────┴─────────────┴──────────────┴─────────┘
 
 protocol / onboarding prefix   STRING
+id  (of the file)              STRING
 packet type (0,1)              NUMBER
     0 = metadata packet
     1 = data packet
@@ -144,9 +145,9 @@ protocol version            NUMBER
 ```
 metadata packet example:
 ```
-https://lightdrive.app/#/scan?a=;0;0;Welcome To Lumaphore Presentation Doc 1.txt;text/plain;0;1125;7;0;0;1;chris macbook;;;10;0.4
+https://lightdrive.app/#/scan?a=;01238901238;0;0;Welcome To Lumaphore Presentation Doc 1.txt;text/plain;0;1125;7;0;0;1;chris macbook;;;10;0.4
 
-PREFIX;PACKET_TYPE;PACKET_INDEX;FILENAME;FILETYPE;ENCRYPTED;SIZE;TOTAL_PACKETS;TRANSMISSION_MEDIUM_TYPE;PUBLIC_METADATA;SENDER;RECIPIENT;AUTH_GROUP;FPS;PROTOCOL_VERSION
+PROTOCOL;ID;PACKET_TYPE;PACKET_INDEX;FILENAME;FILETYPE;ENCRYPTED;SIZE;TOTAL_PACKETS;TRANSMISSION_MEDIUM_TYPE;PUBLIC_METADATA;SENDER;RECIPIENT;AUTH_GROUP;FPS;PROTOCOL_VERSION
 ```
 In this example the `recipient` and `auth group` fields are unused, and left empty. 
 
@@ -164,13 +165,13 @@ data    INT[]
 data packet example:
 
 ```
-https://lightdrive.app/#/scan?a=;1;7;11;5;130,66,247,70,101,233
+https://lightdrive.app/#/scan?a=;01238901238;1;7;11;5;130,66,247,70,101,233
 
-PREFIX;PACKET_TYPE;PACKET_INDEX;DEGREE;K;DATA
+PROTOCOL;ID;PACKET_TYPE;PACKET_INDEX;DEGREE;K;DATA
 ```
 `degree` and `K` are concepts from [erasure codes](https://en.wikipedia.org/wiki/Erasure_code), which are used in Lumaphore to compensate for missing data packets.
 
-The prefix here is a working example from Lightdrive "https://lightdrive.app/#/scan?a=".
+The protocol prefix here is a working example from Lightdrive "https://lightdrive.app/#/scan?a=".
 
 --- 
 
