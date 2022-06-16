@@ -166,9 +166,9 @@ data    INT[]
 data packet example:
 
 ```
-https://lightdrive.app/#/scan?a=;01238901238;1;7;11;5;130,66,247,70,101,233
+https://lightdrive.app/#/scan?a=;01238901238;1;7;6;11;5;130,66,247,70,101,233
 
-PROTOCOL;ID;PACKET_TYPE;PACKET_INDEX;DEGREE;K;DATA
+PROTOCOL;ID;PACKET_TYPE;PACKET_INDEX;INDEX;DEGREE;K;DATA
 ```
 `degree` and `K` are concepts from [erasure codes](https://en.wikipedia.org/wiki/Erasure_code), which are used in Lumaphore to compensate for missing data packets.
 
