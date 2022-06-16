@@ -157,6 +157,7 @@ The prefix here is a working example from Lightdrive "https://lightdrive.app/#/s
 
 ## data packet payload structure
 ```
+index  NUMBER
 degree  NUMBER
 K       NUMBER
 data    INT[]
